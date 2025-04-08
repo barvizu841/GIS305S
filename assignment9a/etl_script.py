@@ -7,14 +7,14 @@ def extract():
     r = requests.get("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDjitOlmILea7koCORJkq6QrUcwBJM7K3vy4guXB0mU_nWR6wsPn136bpH6ykoUxyYMW7wTwkzE37l/pub?output=csv")
     r.encoding = "utf-8"
     data = r.text
-    with open(r"C:\Users\David Neufeld\Downloads\addresses.csv", "w") as output_file:(output_file.write(data))
+    with open(r"C:\Users\baile\Downloads\addresses.csv", "w") as output_file:(output_file.write(data))
 
 def transform():
     print("Add City, State")
 
-    transformed_file = open(r"C:\Users\David Neufeld\Downloads\new_addresses.csv", "w")
+    transformed_file = open(r"C:\Users\baile\Downloads\new_addresses.csv", "w")
     transformed_file.write("X, Y, Type\n")
-    with open(r"Users\David Neufeld\Downloads\addresses/csv", "r") as partial_file:
+    with open(r"C:\Users\baile\Downloads\addresses.csv", "r") as partial_file:
         csv_dict = csv.DictReader(partial_file, delimiter=',')
         for row in csv_dict:
             address = row["Street Address"] + "Boulder CO"
@@ -31,10 +31,10 @@ def transform():
     transformed_file.close()
 
 def load():
-    arcpy.env.workspace = r"C:\Users\David Neufeld\Documents\ArcGIS\GIS305\Projects\Lab 1\WestNileVirus\WestNileVirus.gdb\\"
+    arcpy.env.workspace = r"C:\Users\baile\OneDrive - Colorado Community College System\Class Folders\Spring '25\GIS Programming\Lab 1\WestNileOutbreak\WestNileOutbreak.gdb\\"
     arcpy.env.overwriteOutput = True
 
-    in_table = r"C:\Users\David Neufeld\Downloads\new.addresses.csv"
+    in_table = r"C:\Users\baile\Downloads\new_addresses.csv"
     out_feature_class = "avoid_points"
     x_coords = "X"
     y_coords = "Y"
