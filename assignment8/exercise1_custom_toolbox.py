@@ -1,6 +1,5 @@
 import arcpy
 
-
 def intersect(layer_list, input_lyr_name):
 
     # Run a intersect analysis between the two buffer layers (needs to be a list of layers to intersect)
