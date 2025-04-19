@@ -1,4 +1,3 @@
-
 import yaml
 import arcpy
 from etl.GSheetsEtl import GSheetsEtl
