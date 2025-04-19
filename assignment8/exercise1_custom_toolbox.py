@@ -15,7 +15,7 @@ def buffer_layer(input_gdb, input_layer, dist):
     units = " miles"
     dist = dist + units
     # Output layer will always be named input layer + "_buf
-    output_layer = r"C:\Users\David Neufeld\Documents\ArcGIS\GIS305\Projects\ModelBuilder\ModelBuilder.gdb\\" + input_layer + "_buf"
+    output_layer = r"C:\Users\baile\OneDrive - Colorado Community College System\Class Folders\Spring '25\GIS Programming\Assignment 1b\ModelBuilder\ModelBuilder.gdb\\" + input_layer + "_buf"
     # Always use buffer parameters FULL, ROUND, ALL
     buf_layer = input_gdb + input_layer
     arcpy.Buffer_analysis(buf_layer, output_layer,
@@ -25,11 +25,11 @@ def buffer_layer(input_gdb, input_layer, dist):
 
 def main():
     # Define your workspace and point it at the modelbuilder.gdb
-    arcpy.env.workspace = r"C:\Users\David Neufeld\Documents\ArcGIS\GIS305\Projects\ModelBuilder\ModelBuilder.gdb\\"
+    arcpy.env.workspace = r"C:\Users\baile\OneDrive - Colorado Community College System\Class Folders\Spring '25\GIS Programming\Assignment 1b\ModelBuilder\ModelBuilder.gdb"
     arcpy.env.overwriteOutput = True
 
     # Buffer cities
-    input_gdb = r"C:\Users\David Neufeld\Documents\ArcGIS\GIS305\Data\Admin\AdminData.gdb\USA\\"
+    input_gdb = r"C:\Users\baile\OneDrive - Colorado Community College System\Class Folders\Spring '25\GIS Programming\Assignment 1b\Admin\AdminData.gdb\USA\\"
 
     # Change me this next line below to use GetParamters!!
     dist = input("What buffer distance do you want to use?")
@@ -56,10 +56,9 @@ def main():
 
     # Get the project
     aprx = arcpy.mp.ArcGISProject(
-        r"c:\Users\David Neufeld\Documents\ArcGIS\GIS305\Projects\ModelBuilder\ModelBuilder.ap"
-        r"rx")
+        r"C:\Users\baile\OneDrive - Colorado Community College System\Class Folders\Spring '25\GIS Programming\Assignment 1b\ModelBuilder\ModelBuilder.aprx")
     map_doc = aprx.listMaps()[0]
-    map_doc.addDataFromPath(rf"C:\Users\David Neufeld\Documents\ArcGIS\GIS305\Projects\ModelBuilder\ModelBuilder.gdb\{intersect_lyr_name}")
+    map_doc.addDataFromPath(rf"C:\Users\baile\OneDrive - Colorado Community College System\Class Folders\Spring '25\GIS Programming\Assignment 1b\ModelBuilder\ModelBuilder.gdb\{intersect_lyr_name}")
 
     aprx.save()
 
