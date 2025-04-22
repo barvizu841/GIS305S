@@ -1,4 +1,3 @@
-from turtle import config_dict
 
 import yaml
 import arcpy
