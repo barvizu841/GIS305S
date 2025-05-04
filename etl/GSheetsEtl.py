@@ -4,13 +4,25 @@ import csv
 from etl.SpatialEtl import SpatialEtl
 
 class GSheetsEtl(SpatialEtl):
+    '''
+    GSheetsEtl performs an extract, transform, and load process using a URL to a google spreadsheet.
+    The spreadsheet must contain an address and zipcode column.
 
+    Parameters:
+        config_dict (dictionary): A dictionary containging a remote_url key to the google spreadsheet
+        and a web geocoding service.
+
+    '''
     config_dict = None
 
     def __init__(self, config_dict):
         super().__init__(config_dict)
 
     def extract(self):
+        '''
+        Extracting data from a google spreadsheet and save it as a local file
+        '''
+
         print("Extracting addresses from google form spreadsheet")
 
         r = requests.get(self.config_dict.get('remote_url')) #updated to yaml
@@ -20,6 +32,9 @@ class GSheetsEtl(SpatialEtl):
             output_file.write(data) #updated to yaml
 
     def transform(self):
+        '''
+        Transforming data by georeferencing the addresses
+        '''
         print("Add City, State")
 
         transformed_file = open(f"{self.config_dict.get('proj_dir')}new_addresses.csv", "w") #updated to yaml
@@ -41,6 +56,9 @@ class GSheetsEtl(SpatialEtl):
         transformed_file.close()
 
     def load(self):
+        '''
+        Loading data into the ArcGIS Pro project
+        '''
         workspace = f"{self.config_dict.get('workspace_dir')}WestNileOutbreak.gdb" #updated to yaml
         arcpy.env.workspace = workspace
         arcpy.env.overwriteOutput = True
