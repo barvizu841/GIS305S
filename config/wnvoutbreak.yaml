@@ -1,0 +1,9 @@
+
+remote_url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_-h8CvOaz_cDxTtRgQfQLrnt-hxoioejULm8jlV_Ks7fB1myLiucwQ9xg2qBQlSxWu3zAtdWhSwdE/pub?output=csv'
+proj_dir: 'C:\\Users\\baile\\Downloads' #is this the correct directory?
+data_format: 'GSheet'
+workspace_dir: "C:\\Users\\baile\\OneDrive - Colorado Community College System\\Class Folders\\Spring2025\\GIS Programming\\Lab 1\\WestNileOutbreak\\"
+geocoder_prefix_ref: 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address='
+geocoder_suffix_ref: '&benchmark=2020&format=json'
+
+#Load to workspace (WestNileOutbreak.gdb). 'destination'
