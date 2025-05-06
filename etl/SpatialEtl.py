@@ -2,13 +2,19 @@ class SpatialEtl:
 
     def __init__(self, config_dict):
         self.config_dict = config_dict
-
+    '''
+    Extract data from google survey
+    '''
     def extract(self):
         print(f"Extracting data from {self.config_dict.get('remote_url')} to {self.config_dict.get('project_dir')}")
-
+    '''
+    Transform data by geocoding addresses
+    '''
     def transform(self):
         print(f"Transforming {self.config_dict.get('data_format')}")
-
+    '''
+    Load data into the ArcGIS Pro project
+    '''
     def load(self):
         print(f"Loading data into {self.config_dict.get('workspace_dir')}WestNileOutbreak.gdb")
 
