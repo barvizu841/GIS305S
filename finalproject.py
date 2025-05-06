@@ -6,46 +6,71 @@ import os
 from etl.GSheetsEtl import GSheetsEtl
 
 def setup():
-    with open('config/wnvoutbreak.yaml') as f:
-        config_dict = yaml.load(f, Loader=yaml.FullLoader)
-        logging.basicConfig(filename=f"{config_dict.get('workspace_dir')}wnv.log",
-                            filemode="w", level=logging.DEBUG)
-    return config_dict
+    try:
+        with open('config/wnvoutbreak.yaml') as f:
+            config_dict = yaml.load(f, Loader=yaml.FullLoader)
+            logging.basicConfig(filename=f"{config_dict.get('workspace_dir')}wnv.log",
+                                filemode="w", level=logging.DEBUG)
+        return config_dict
+    except Exception as e:
+        print(f"Error in setup(): {e}")
+        logging.error(f"Error in setup(): {e}")
+
 
 def bufferFunct (shapefile, bufferDistance):
-    outputName = f"{shapefile}_buffer"
+    try:
+        outputName = f"{shapefile}_buffer"
 
-    if arcpy.Exists(outputName):
-        print(f"Output {outputName} already exists. Deleting it...")
-        arcpy.Delete_management(outputName)
+        if arcpy.Exists(outputName):
+            print(f"Output {outputName} already exists. Deleting it...")
+            arcpy.Delete_management(outputName)
 
-    arcpy.analysis.Buffer(shapefile, outputName, bufferDistance)
-    print(f"buffer executed for {shapefile}")
-    print(f"buffered shapefile: {outputName}")
-    return
+        arcpy.analysis.Buffer(shapefile, outputName, bufferDistance)
+        print(f"buffer executed for {shapefile}")
+        print(f"buffered shapefile: {outputName}")
+        return
+    except Exception as e:
+        print(f"Error in bufferFunct(): {e}")
+        logging.error(f"Error in bufferFunct(): {e}")
+
 
 def intersectFunct (infeatures):
-    layerName = ("intersect")
+    try:
+        layerName = ("intersect")
         #input(f"Name the intersect layer: "))
-    arcpy.analysis.Intersect(infeatures, layerName, "ONLY_FID")
-    print(f"{layerName} created")
-    return layerName
+        arcpy.analysis.Intersect(infeatures, layerName, "ONLY_FID")
+        print(f"{layerName} created")
+        return layerName
+    except Exception as e:
+        print(f"Error in intersectFunct(): {e}")
+        logging.error(f"Error in intersectFunct(): {e}")
+        return None
+
 
 # ETL Function
 def etl():
-    print("Starting ETL Process...")
-    etl_instance = GSheetsEtl(config_dict)
-    etl_instance.process()
+    try:
+        print("Starting ETL Process...")
+        etl_instance = GSheetsEtl(config_dict)
+        etl_instance.process()
+    except Exception as e:
+        print(f"Error in etl(): {e}")
+        logging.error(f"Error in etl(): {e}")
+
 
 def exportMap ():
-    aprx = arcpy.mp.ArcGISProject(f"{config_dict.get('workspace_dir')}WestNileOutbreak.aprx")
-    lyt = aprx.listLayouts()[0]
-    sub_title = input("Enter a subtitle for the map layout: ")
-    for el in lyt.listElements():
-        print(el.name)
-        if "Title" in el.name:
-            el.text = el.text + sub_title
-    lyt.exportToPDF(f"{config_dict.get('workspace_dir')}Layouts\WestNileOutbreakLayout.pdf")
+    try:
+        aprx = arcpy.mp.ArcGISProject(f"{config_dict.get('workspace_dir')}WestNileOutbreak.aprx")
+        lyt = aprx.listLayouts()[0]
+        sub_title = input("Enter a subtitle for the map layout: ")
+        for el in lyt.listElements():
+            print(el.name)
+            if "Title" in el.name:
+                el.text = el.text + sub_title
+        lyt.exportToPDF(f"{config_dict.get('workspace_dir')}Layouts\WestNileOutbreakLayout.pdf")
+    except Exception as e:
+        print(f"Error in exportMap(): {e}")
+        logging.error(f"Error in exportMap(): {e}")
 
 if __name__ == "__main__":
     arcpy.env.overwriteOutput = True
